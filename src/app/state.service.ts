@@ -1,31 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { timeout } from 'q';
 
 @Injectable()
 export class StateService
 {
+
+  private mLastIndex = 0;
   private mIndex$ = new Subject<number>();
 
-  constructor() { }
+  constructor()
+  {
+    console.log( "State constructed..." );
+
+    //TODO: Should I be using $interval?
+    setInterval( () =>
+    {
+      //TODO: Should I be using $location?
+      let currentIndex = Number.parseInt( location.hash.substring( 1 ) );
+      if ( currentIndex != this.mLastIndex )
+      {
+        this.mIndex$.next( currentIndex );
+        this.mLastIndex = currentIndex;
+      }     
+    }, 
+    1000 );
+  }
 
   init()
   {
-    let lastIndex = -1;
-
-    //TODO: Should I be using $timeout because this does not work?
-    setTimeout( ( index : Subject<number> ) =>
-    {
-      console.log( "Checking hash..." );
-      let currentIndex = Number.parseInt( location.hash );
-      if ( currentIndex != lastIndex )
-      {
-        index.next( currentIndex );
-        lastIndex = currentIndex;
-      }
-    }, 
-    1000,
-    this.mIndex$ );
   }
 
   subscribe( lambda : ( index : number ) => void ) : void

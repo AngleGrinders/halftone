@@ -5,13 +5,18 @@ import { StateService } from '../state.service';
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
   styleUrls: ['./viewer.component.css'],
-  providers: [StateService],
 })
 export class ViewerComponent implements OnInit {
 
-  mIndex : number;
+  private mIndex : number;
 
-  constructor( private mState : StateService ) { }
+  private mState : StateService;
+
+  constructor( private state : StateService )
+  {
+    this.mIndex = 0;
+    this.mState = state;
+  }
 
   ngOnInit()
   {
