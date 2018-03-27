@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-controller',
@@ -7,9 +8,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ControllerComponent implements OnInit {
 
-  constructor() { }
+  private mState : StateService;
 
-  ngOnInit() {
+  constructor( private state : StateService )
+  {
+    this.mState = state;
   }
 
+  ngOnInit()
+  {
+  }
+
+  prev() : void
+  {
+    let index = this.mState.getIndex();
+    if ( index > 1 )
+    {
+      location.hash = "#" + ( index - 1 );
+    }
+  }
+
+  next() : void
+  {
+    let index = this.mState.getIndex();
+    if ( true ) //TODO: limit by number of dots
+    {
+      location.hash = "#" + ( index + 1 );
+    }
+  }
 }

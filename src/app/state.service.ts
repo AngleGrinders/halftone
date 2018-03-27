@@ -1,39 +1,48 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { timeout } from 'q';
 
 @Injectable()
 export class StateService
 {
 
-  private mLastIndex = 0;
-  private mIndex$ = new Subject<number>();
+  private mLastIndex;
+  private mIndex$;
 
   constructor()
   {
-    console.log( "State constructed..." );
+    this.mLastIndex = 1;
+    this.mIndex$ = new Subject<number>();
 
     //TODO: Should I be using $interval?
-    setInterval( () =>
-    {
-      //TODO: Should I be using $location?
-      let currentIndex = Number.parseInt( location.hash.substring( 1 ) );
-      if ( currentIndex != this.mLastIndex )
-      {
-        this.mIndex$.next( currentIndex );
-        this.mLastIndex = currentIndex;
-      }     
-    }, 
-    1000 );
-  }
-
-  init()
-  {
+    setInterval( () => { this.parseLocationHash(); }, 1000 );
   }
 
   subscribe( lambda : ( index : number ) => void ) : void
   {
     this.mIndex$.subscribe( lambda );
+
+    // Initialize the index immediately
+    this.parseLocationHash();
+  }
+
+  getIndex() : number
+  {
+    return this.mLastIndex;
+  }
+
+  /**
+   * Parses the URL hash and sets the mIndex
+   */
+  private parseLocationHash() : void
+  {
+    //TODO: Should I be using $location?
+    let currentIndex = Number.parseInt( location.hash.substring( 1 ) );
+    if ( ! Number.isNaN( currentIndex ) && currentIndex != this.mLastIndex )
+    {
+      console.log( "State Change, index = " + currentIndex );
+      this.mIndex$.next( currentIndex );
+      this.mLastIndex = currentIndex;
+    }  
   }
 }

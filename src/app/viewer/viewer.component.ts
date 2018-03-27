@@ -8,13 +8,13 @@ import { StateService } from '../state.service';
 })
 export class ViewerComponent implements OnInit {
 
-  private mIndex : number;
+  /*package*/ mIndex : number;
 
   private mState : StateService;
 
   constructor( private state : StateService )
   {
-    this.mIndex = 0;
+    this.mIndex = 1;
     this.mState = state;
   }
 
