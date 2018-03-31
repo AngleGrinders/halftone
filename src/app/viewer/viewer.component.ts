@@ -21,11 +21,11 @@ export class ViewerComponent implements OnInit {
   {
     this.mIndex = 1;
     this.mState = state;
-    this.mGraphViz = null;
   }
 
   ngOnInit()
   {
+    this.mGraphViz = d3.select("#graph").graphviz();
     this.mState.subscribe( ( index : number ) =>
     {
       console.log( "New index: " + index );
@@ -36,11 +36,6 @@ export class ViewerComponent implements OnInit {
 
   private updateGraph( index : number ) : void
   {
-    if ( this.mGraphViz == null )
-    { 
-      this.mGraphViz = d3.select("#graph").graphviz();
-    }
-
     this.mGraphViz.transition(
       d3.transition()
         .duration(1000) );
