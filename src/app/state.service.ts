@@ -3,16 +3,16 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
-export class StateService
-{
+export class StateService {
 
   private mLastIndex;
   private mIndex$;
+  private showEditor;
 
-  constructor()
-  {
+  constructor() {
     this.mLastIndex = NaN;
     this.mIndex$ = new Subject<number>();
+    this.showEditor = false;
 
     //TODO: Should I be using $interval?
     setInterval( () => { this.parseLocationHash(); }, 1000 );
@@ -29,6 +29,12 @@ export class StateService
   getIndex() : number
   {
     return this.mLastIndex;
+  }
+  getShowEditor(): boolean {
+    return this.showEditor;
+  }
+  togleShowEditor(): void {
+    this.showEditor = !this.showEditor;
   }
 
   /**

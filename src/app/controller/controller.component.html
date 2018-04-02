@@ -1,10 +1,14 @@
-<div id="controller">
-  controller toolbar
-
-  <button (click)="prev()">Prev</button>
-  <button (click)="next()">Next</button>
-  <button>Load</button>
-  <button>Edit</button>
-  <button>Save</button>
-  <button>Link</button>
+<div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+  <div class="container">
+    <a href="../" class="navbar-brand">{{title}}</a>
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" (pageChange)="pageChange($event)"></ngb-pagination>
+    <form class="">
+      <button (click)="prev()" type="button" class="btn btn-info">Prev</button>
+      <button (click)="next()" type="button" class="btn btn-info">Next</button>
+      <button type="button" class="btn btn-warning">Load</button>
+      <button type="button" class="btn btn-primary" (click)="togleShowEditor()">Edit</button>
+      <button type="button" class="btn btn-success">Save</button>
+      <button type="button" class="btn btn-link">Link</button>
+    </form>
+  </div>
 </div>

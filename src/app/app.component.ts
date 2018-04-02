@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { StateService } from './state.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  private mState: StateService;
   title = 'diag';
+
+  constructor(private state: StateService) {
+      this.mState = state;
+  }
+  isShowEditor(): boolean {
+    return this.mState.getShowEditor();
+   }
 }

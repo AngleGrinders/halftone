@@ -7,6 +7,7 @@ import { ViewerComponent } from './viewer/viewer.component';
 import { EditorComponent } from './editor/editor.component';
 import { ControllerComponent } from './controller/controller.component';
 import { StateService } from './state.service';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { StateService } from './state.service';
     ControllerComponent
   ],
   imports: [
+    NgbModule.forRoot(),
     BrowserModule
   ],
   providers: [StateService],
