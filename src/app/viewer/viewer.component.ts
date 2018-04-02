@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../state.service';
-//import { graphviz } from 'd3-graphviz';
-//import * as d3 from 'd3';
-declare var d3;
+import { graphviz } from 'd3-graphviz';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'app-viewer',
@@ -25,7 +24,8 @@ export class ViewerComponent implements OnInit {
 
   ngOnInit()
   {
-    this.mGraphViz = d3.select("#graph").graphviz();
+    this.mGraphViz = graphviz( "#graph", false );
+    
     this.mState.subscribe( ( index : number ) =>
     {
       console.log( "New index: " + index );

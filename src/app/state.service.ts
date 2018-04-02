@@ -40,7 +40,7 @@ export class StateService
     let currentIndex = Number.parseInt( location.hash.substring( 1 ) );
     if ( Number.isNaN( currentIndex ) )
     {
-      console.error( "Location hash is not a number: " + location.hash );
+      //console.error( "Location hash is not a number: " + location.hash );
       currentIndex = 1;
     }
     if ( currentIndex != this.mLastIndex )
