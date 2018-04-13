@@ -1,3 +1,3 @@
 <div id="editor">
-    <textarea (keyup)="changed()">{{ dots }}</textarea>
+    <textarea class="form-control" style="min-width: 100%; min-height:250px" [(ngModel)]="dots" (keyup)="changed()">{{ dots }}</textarea>
 </div>

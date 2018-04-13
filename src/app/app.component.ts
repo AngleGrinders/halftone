@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { StateService } from './state.service';
 import { IndexMonitor } from './index-monitor';
 
 @Component({
@@ -6,19 +7,21 @@ import { IndexMonitor } from './index-monitor';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent
-{  
-  title = 'diag';
-  private indexMonitor : IndexMonitor;
+export class AppComponent implements OnInit {
 
-  constructor( private indexMon : IndexMonitor )
-  {
-    this.indexMonitor = indexMon;
+  private mState: StateService;
+  private indexMonitor: IndexMonitor;
+  title = 'diag';
+
+  constructor(private state: StateService, private indexMon: IndexMonitor ) {
+      this.mState = state;
+      this.indexMonitor = indexMon;
+  }
+  ngOnInit() {
+    this.indexMonitor.start();
   }
 
-
-  ngOnInit()
-  {
-    this.indexMonitor.start();
+  isShowEditor(): boolean {
+    return this.mState.getShowEditor();
   }
 }

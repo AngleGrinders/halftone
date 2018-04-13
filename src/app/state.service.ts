@@ -6,17 +6,21 @@ import { State } from './state';
 @Injectable()
 export class StateService
 {
-    private stateSubject$ : Subject<State>;
-    private name : string;
-    private lastDots : string;
-    private dots : string;
+    private stateSubject$: Subject<State>;
+    private name: string;
+    private lastDots: string;
+    private dots: string;
 
-    constructor()
-    {
+  private mLastIndex;
+  private mIndex$;
+  private showEditor;
+
+  constructor()
+  {
       this.stateSubject$ = new Subject<State>();
-      this.name = "None";
+      this.name = 'None';
       this.dots = `
-        digraph one { 
+        digraph one {
           two[URL="#two"]
           one->two
         }
@@ -25,27 +29,59 @@ export class StateService
           one[URL="#one"]
           two[URL="#two"]
           three[URL="#three"]
-          
+
           one->two->three
         }
-        digraph three { 
-          
+        digraph three {
+
           one[URL="#one"]
           two[URL="#two"]
           three[URL="#three"]
           four[URL="#four"]
-          
+
          one->two->{three four}
         }
       `;
-    }
+    this.mLastIndex = NaN;
+    this.mIndex$ = new Subject<number>();
+    this.showEditor = false;
 
-  subscribe( lambda : ( state : State ) => void ) : void
+    //TODO: Should I be using $interval?
+    setInterval( () => { this.parseLocationHash(); }, 1000 );
+  }
+
+  getIndex(): number {
+    return this.mLastIndex;
+  }
+  getShowEditor(): boolean {
+    return this.showEditor;
+  }
+  togleShowEditor(): void {
+    this.showEditor = !this.showEditor;
+  }
+
+  /**
+   * Parses the URL hash and sets the mIndex
+   */
+  private parseLocationHash(): void {
+    //TODO: Should I be using $location?
+    let currentIndex = Number.parseInt( location.hash.substring( 1 ) );
+    if ( Number.isNaN( currentIndex ) ) {
+      console.error( "Location hash is not a number: " + location.hash );
+      currentIndex = 1;
+    }
+    if ( currentIndex !== this.mLastIndex ) {
+      console.log( "State Change, index = " + currentIndex );
+      this.mIndex$.next( currentIndex );
+      this.mLastIndex = currentIndex;
+    }
+  }
+  subscribe( lambda: ( state: State ) => void ): void
   {
     this.stateSubject$.subscribe( lambda );
   }
 
-  public getName() : string
+  public getName(): string
   {
     return this.name;
   }

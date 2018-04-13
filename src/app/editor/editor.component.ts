@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { StateService } from '../state.service';
 import { State } from '../state';
 
@@ -18,7 +19,7 @@ export class EditorComponent implements OnInit {
     this.stateService = state;
   }
 
-  ngOnInit() 
+  ngOnInit()
   {
     this.stateService.subscribe( ( state : State ) =>
     {
