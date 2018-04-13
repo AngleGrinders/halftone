@@ -21,19 +21,19 @@ export class ControllerComponent implements OnInit {
 
   prev() : void
   {
-    let index = this.mState.getIndex();
-    if ( index > 1 )
-    {
-      location.hash = "#" + ( index - 1 );
-    }
+    //let index = this.mState.getName();
+    //if ( index > 1 )
+    //{
+    //  location.hash = "#" + ( index - 1 );
+    //}
   }
 
   next() : void
   {
-    let index = this.mState.getIndex();
-    if ( true ) //TODO: limit by number of dots
-    {
-      location.hash = "#" + ( index + 1 );
-    }
+    //let index = this.mState.getIndex();
+    //if ( true ) //TODO: limit by number of dots
+    //{
+    //  location.hash = "#" + ( index + 1 );
+    //}
   }
 }
