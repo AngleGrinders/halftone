@@ -1,3 +1,8 @@
 #viewer {
     background-color: #5e61ff;
 }
+
+#errorBox {
+    color: #ffffff;
+    background-color: #d11e27;
+}

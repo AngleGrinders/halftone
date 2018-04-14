@@ -12,18 +12,30 @@ export class ViewerComponent implements OnInit {
 
   private stateService : StateService;
   private currentDot : string;
-
+  /*package*/ errorMessage : string;
   private graphviz : graphviz;
 
   constructor( private state : StateService )
   {
     this.stateService = state;
+    this.errorMessage = "";
   }
 
   ngOnInit()
   {
     this.graphviz = graphviz( "#graph", false );
-    
+
+    this.graphviz.onerror( error => 
+      {
+        console.log(error);
+         this.errorMessage = error;
+      } );
+
+    this.graphviz.on( "dataProcessEnd", () => 
+      {
+          this.errorMessage = "";
+      } );
+      
     setInterval( () => { this.checkDotUpdate(); }, 100 );
   }
 
