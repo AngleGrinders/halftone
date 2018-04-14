@@ -1,9 +1,11 @@
 <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
   <div class="container">
-    <a href="../" class="navbar-brand">{{title}}</a>
-    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" (pageChange)="pageChange($event)"></ngb-pagination>
-    <form class="">
+    <a href="../" class="navbar-brand">{{ title }}</a>
+    <form>
       <button (click)="prev()" type="button" class="btn btn-info">Prev</button>
+      <select (change)="changedName( $event.target.value )">
+        <option *ngFor="let name of names">{{ name }}</option>
+      </select>
       <button (click)="next()" type="button" class="btn btn-info">Next</button>
       <button type="button" class="btn btn-warning">Load</button>
       <button type="button" class="btn btn-primary" (click)="togleShowEditor()">Edit</button>

@@ -9,7 +9,7 @@ import { ViewerComponent } from './viewer/viewer.component';
 import { EditorComponent } from './editor/editor.component';
 import { ControllerComponent } from './controller/controller.component';
 import { StateService } from './state.service';
-import { IndexMonitor } from './index-monitor';
+import { NameMonitor } from './name.monitor';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { IndexMonitor } from './index-monitor';
     BrowserModule,
     FormsModule
   ],
-  providers: [StateService, IndexMonitor],
+  providers: [StateService, NameMonitor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

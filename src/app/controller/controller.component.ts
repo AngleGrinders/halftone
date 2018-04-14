@@ -10,51 +10,52 @@ import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ControllerComponent implements OnInit {
 
-  private mState: StateService;
-  public isCollapsed = false;
+  private stateService: StateService;
+  /*package*/ names : Array<string>;
+  /*package*/ title : string;
 
-  // Paginator variables
-  // TODO get the collectionSize from StateService
-  collectionSize = 9;
-  page = 1;
-  maxSize = 2;
-  title = "Diag";
-
-
-  constructor(private state: StateService, private config: NgbPaginationConfig) {
-    this.mState = state;
-    // customize default values of paginations used by this component tree
-    config.size = 'lg';
-    config.boundaryLinks = true;
-    config.pageSize = 3;
-    config.maxSize = 3;
+  constructor(private state: StateService, private config: NgbPaginationConfig)
+  {
+    this.stateService = state;
+    this.names = state.getNames();
+    this.title = "Diag";
   }
 
   ngOnInit()
   {
+    setInterval( () => { this.updateNames(); }, 100 );
   }
 
-  prev(): void {
-    let index = this.mState.getIndex();
-    if (index > 1) {
-      location.hash = "#" + (index - 1);
-      this.page = index - 1 ;
-    }
+  /*package*/ changedName( name ) : void
+  {
+    location.hash = "#" + name;
   }
 
-  next(): void {
-    let index = this.mState.getIndex();
-    if (true) //TODO: limit by number of dots
+  /*package*/ prev(): void
+  {
+    let currentName = this.stateService.getName();
+    let currentIndex = this.names.findIndex( name => name === currentName );
+    if ( currentIndex > 0 )
     {
-      location.hash = "#" + (index + 1);
-      this.page = index + 1;
+      location.hash = "#" + this.names[ currentIndex - 1 ];
     }
   }
-  pageChange(page: number): void{
-    location.hash = "#" + (page);
+
+  /*package*/ next(): void {
+    let currentName = this.stateService.getName();
+    let currentIndex = this.names.findIndex( name => name === currentName );
+    if ( currentIndex < ( this.names.length - 1 ) )
+    {
+      location.hash = "#" + this.names[ currentIndex + 1 ];
+    }
+  }
+  
+  /*package*/ togleShowEditor(): void {
+   this.stateService.togleShowEditor();
   }
 
-  togleShowEditor(): void {
-   this.mState.togleShowEditor();
+  private updateNames() : void
+  {
+    this.names = this.stateService.getNames();
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { StateService } from '../state.service';
-import { State } from '../state';
 
 @Component({
   selector: 'app-editor',
@@ -10,9 +9,7 @@ import { State } from '../state';
 })
 export class EditorComponent implements OnInit {
 
-  private stateService : StateService;
-
-  /*package*/ dots : string;
+  /*package*/ stateService : StateService;
 
   constructor( private state : StateService )
   {
@@ -21,19 +18,5 @@ export class EditorComponent implements OnInit {
 
   ngOnInit()
   {
-    this.stateService.subscribe( ( state : State ) =>
-    {
-      if ( this.dots !== state.dots )
-      {
-        this.dots = state.dots;
-      }
-    } );
-  }
-
-  /*package*/ changed() : void
-  {
-    console.log("changed " + this.dots);
-
-    this.stateService.setDots( this.dots );
   }
 }

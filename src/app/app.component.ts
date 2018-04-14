@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from './state.service';
-import { IndexMonitor } from './index-monitor';
+import { NameMonitor } from './name.monitor';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +10,15 @@ import { IndexMonitor } from './index-monitor';
 export class AppComponent implements OnInit {
 
   private mState: StateService;
-  private indexMonitor: IndexMonitor;
+  private nameMonitor: NameMonitor;
   title = 'diag';
 
-  constructor(private state: StateService, private indexMon: IndexMonitor ) {
+  constructor(private state: StateService, private nameMon: NameMonitor ) {
       this.mState = state;
-      this.indexMonitor = indexMon;
+      this.nameMonitor = nameMon;
   }
   ngOnInit() {
-    this.indexMonitor.start();
+    this.nameMonitor.start();
   }
 
   isShowEditor(): boolean {

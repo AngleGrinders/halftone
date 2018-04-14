@@ -2,7 +2,7 @@ import { StateService } from './state.service';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class IndexMonitor
+export class NameMonitor
 {
     private stateService : StateService;
 
