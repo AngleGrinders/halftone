@@ -14,9 +14,14 @@ export class ControllerComponent implements OnInit {
   /*package*/ names : Array<string>;
   /*package*/ title : string;
 
-  constructor(private state: StateService, private config: NgbPaginationConfig)
+  constructor( private state  : StateService, private config : NgbPaginationConfig )
   {
     this.stateService = state;
+    let dots = this.getQueryParam( "dots" );
+    if ( dots.length > 0 )
+    {
+      this.stateService.setDots( dots );
+    }
     this.names = state.getNames();
     this.title = "Diag";
   }
@@ -41,7 +46,8 @@ export class ControllerComponent implements OnInit {
     }
   }
 
-  /*package*/ next(): void {
+  /*package*/ next(): void
+  {
     let currentName = this.stateService.getName();
     let currentIndex = this.names.findIndex( name => name === currentName );
     if ( currentIndex < ( this.names.length - 1 ) )
@@ -50,12 +56,32 @@ export class ControllerComponent implements OnInit {
     }
   }
   
-  /*package*/ togleShowEditor(): void {
+  /*package*/ togleShowEditor(): void
+  {
    this.stateService.togleShowEditor();
+  }
+
+  /*package*/ link(): void
+  {
+    window.location.search = "?dots=" + encodeURIComponent( this.stateService.dots );
   }
 
   private updateNames() : void
   {
     this.names = this.stateService.getNames();
+  }
+
+  private getQueryParam( param : string )
+  {
+    let query = window.location.search.substring(1);
+    let vars = query.split( '&' );
+    for ( let i = 0; i < vars.length; i++ ) {
+        let pair = vars[i].split( '=' );
+        if ( decodeURIComponent( pair[0] ) == param )
+        {
+            return decodeURIComponent( pair[1] );
+        }
+    }
+    return "";
   }
 }
