@@ -63,7 +63,7 @@ export class ControllerComponent implements OnInit {
 
   /*package*/ link(): void
   {
-    window.location.search = "?dots=" + encodeURIComponent( this.stateService.dots );
+    window.location.hash = "#dots=" + encodeURIComponent( this.stateService.dots );
   }
 
   private updateNames() : void

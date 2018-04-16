@@ -4,11 +4,15 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class NameMonitor
 {
-    private stateService : StateService;
-
-    constructor( private stateServiceIn : StateService )
+    constructor( private state : StateService )
     {
-        this.stateService = stateServiceIn;
+
+        let initialHash = this.getHash();
+        if ( initialHash.startsWith( "dots" ) )
+        {
+            state.setDots( decodeURIComponent( initialHash.substr( 4 ) ) );
+            location.hash = "";
+        }
     }
 
     /**
@@ -17,13 +21,22 @@ export class NameMonitor
     private parseLocationHash() : void
     {
         //TODO: Should I be using $location?
-        let newName = ( location.hash.length > 1 ? location.hash.substring( 1 ) : "" );
-        this.stateService.setName( newName );
+        let newName = this.getHash();
+
+        if ( ! newName.startsWith( "dots" ) )
+        {
+            this.state.setName( newName );
+        }
     }
 
     start() : void
     {
         //TODO: Should I be using $interval?
         setInterval( () => { this.parseLocationHash(); }, 100 );
+    }
+
+    private getHash()
+    {
+        return ( location.hash.length > 1 ? location.hash.substring( 1 ) : "" );
     }
 }
