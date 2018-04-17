@@ -8,9 +8,9 @@ export class NameMonitor
     {
 
         let initialHash = this.getHash();
-        if ( initialHash.startsWith( "dots" ) )
+        if ( initialHash.startsWith( "dots=" ) )
         {
-            state.setDots( decodeURIComponent( initialHash.substr( 4 ) ) );
+            state.setDots( decodeURIComponent( initialHash.substr( 5 ) ) );
             location.hash = "";
         }
     }
@@ -23,7 +23,7 @@ export class NameMonitor
         //TODO: Should I be using $location?
         let newName = this.getHash();
 
-        if ( ! newName.startsWith( "dots" ) )
+        if ( ! newName.startsWith( "dots=" ) )
         {
             this.state.setName( newName );
         }
