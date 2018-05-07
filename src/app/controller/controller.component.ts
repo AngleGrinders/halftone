@@ -23,7 +23,7 @@ export class ControllerComponent implements OnInit {
       this.stateService.setDots( dots );
     }
     this.names = state.getNames();
-    this.title = "Diag";
+    this.title = "Halftone";
   }
 
   ngOnInit()

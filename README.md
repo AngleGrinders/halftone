@@ -1,6 +1,15 @@
-# diag
-**D**iagrams made **I**nteractive with **A**nimated **G**raphViz
- 
+# Halftone
+Halftone is a printing technique that produces images using a pattern of dots.
+This page produces interactive, animated GraphViz diagrams from a sequence of DOTs.
+
+## Custom DOT Enhancement
+When the following line is entered:
+
+* subgraph import_name {};
+
+The digraph by that name will be inserted (recursively) into that subgraph block.
+This allows the author to reuse previously written graphs without duplicating it.
+
 ## Prerequisites
 1. Node.js
     * Download from [node.js](https://nodejs.org/en/download/)
@@ -10,24 +19,8 @@
 2. ng serve
 
 ## Build & Publish
-1. ng build --prod --base-href="https://AngleGrinders.github.io/diag/"
+1. ng build --prod --base-href="https://AngleGrinders.github.io/halftone/"
 2. node_modules/angular-cli-ghpages/bin/angular-cli-ghpages
-
-## Disign
-1. diag will be displayed as one, client-side only, page without any server backend.
-2. diag could be initialized by providing the model as a URL encoded argument.
-3. diag will be composed of the following components:
-    1. Controller
-        *  A horizontal bar allowing the user to navigate which step to view and other controls like: play, pause, save, ...
-    2. Editor
-        * A text area where the DOT code is entered for the current step.
-    3. Player
-        * Area where d3-graphviz is used to render the current step.
-4. The above components will be injected with the following services:
-    1. Model
-        * Holds all the DOT diagrams for all steps
-    2. State
-        * Holds the current step number
 
 # Samples
 1. [Example IntelePACS Doc](https://anglegrinders.github.io/diag/#dots=digraph%20overview%20%7B%0A%20%20rankdir%3DLR%0A%20%20node%5Bstyle%3Dfilled%5D%0A%20%20subgraph%20cluster_pipeline%20%7B%0Alabel%3DIntelePACS%0A%20%20%20%20LDS%5BURL%3D%22%23lds%22%5D%0A%20%20%20%20DMS%5BURL%3D%22%23dms%22%5D%0Aimage_server%5BURL%3D%22%23image_server%22%5D%0A%20%20%20%20UMDB%5BURL%3D%22%23umdb%22%5D%0A%20%20%20%20AutoRoute%5BURL%3D%22%23autoroute%22%5D%0A%20%20%20%20AutoMove%5BURL%3D%22%23automove%22%5D%0A%20%20%20%20%0A%20%20%7D%0A%20%20%20%20scanner%20-%3E%20image_server%20-%3E%20LDS%20-%3E%20%7B%20AutoRoute%20UMDB%20AutoMove%20DMS%7D%0A%20%20%20%20UMDB-%3EDMS%0A%0A%7D%0A%0Adigraph%20image_server%20%7B%0A%20%20rankdir%3DLR%0A%20%20node%5Bstyle%3Dfilled%5D%0A%20%20subgraph%20cluster_pipeline%20%7B%0Alabel%3DIntelePACS%0A%20%20%20%20LDS%5BURL%3D%22%23lds%22%5D%0A%20%20%20%20DMS%5BURL%3D%22%23dms%22%5D%0Aimage_server%5BURL%3D%22%23image_server%22%5D%0A%20%20%20%20UMDB%5BURL%3D%22%23umdb%22%5D%0A%20%20%20%20AutoRoute%5BURL%3D%22%23autoroute%22%5D%0A%20%20%20%20AutoMove%5BURL%3D%22%23automove%22%5D%0A%20%20%20%20%0A%20%20%7D%0A%20%20%20%20scanner%20-%3E%20image_server%20-%3E%20LDS%20-%3E%20%7B%20AutoRoute%20UMDB%20AutoMove%20DMS%7D%0A%20%20%20%20UMDB-%3EDMS%0A%0Asubgraph%20cluster_FAQ%20%7B%0A%20%20faq1%5Blabel%3D%22Association%20Rejected%22%20URL%3D%22%23image_server_faq1%22%5D%0A%20%20faq2%5Blabel%3D%22Too%20slow%22%20URL%3D%22%23image_server_faq2%22%5D%0A%20%20faq3%5Blabel%3D%22Load%20Balancing%22%5D%0A%20%20faq4%5Blabel%3D%22...%22%5D%0A%7D%0Aimage_server-%3E%7B%20faq1%20faq2%20faq3%20faq4%20%7D%0A%7D%0A%0Adigraph%20image_server_faq1%20%7B%0A%20%20rankdir%3DLR%0A%20%20node%5Bstyle%3Dfilled%5D%0A%20%20subgraph%20cluster_pipeline%20%7B%0Alabel%3DIntelePACS%0A%20%20%20%20LDS%5BURL%3D%22%23lds%22%5D%0A%20%20%20%20DMS%5BURL%3D%22%23dms%22%5D%0Aimage_server%5BURL%3D%22%23image_server%22%5D%0A%20%20%20%20UMDB%5BURL%3D%22%23umdb%22%5D%0A%20%20%20%20AutoRoute%5BURL%3D%22%23autoroute%22%5D%0A%20%20%20%20AutoMove%5BURL%3D%22%23automove%22%5D%0A%20%20%7D%0A%20%20%20%20scanner%20-%3E%20image_server%20-%3E%20LDS%20-%3E%20%7B%20AutoRoute%20UMDB%20AutoMove%20DMS%7D%0A%20%20%20%20UMDB-%3EDMS%0A%0Asubgraph%20cluster_FAQ%20%7B%0A%20%20faq1%5Blabel%3D%22Association%20Rejected%22%20URL%3D%22%23image_server_faq1%22%5D%0A%20%20faq2%5Blabel%3D%22Too%20slow%22%20URL%3D%22%23image_server_faq2%22%5D%0A%20%20faq3%5Blabel%3D%22Load%20Balancing%22%5D%0A%20%20faq4%5Blabel%3D%22...%22%5D%0A%7D%0Aimage_server-%3E%7B%20faq1%20faq2%20faq3%20faq4%20%7D%0A%0Aans1%5Bshape%3Dbox%20label%3D%22Image%20server%20%0AANSWER%20%23%201%0A%0AThis%20service%20is%20performing%20the%20initial%20image%20ingestion%0A%0ALogs%3A%20%2Fvar%2Flog%2FPACS%2Fimage_server%0A%0ALink%20to%20training%20slide%3A%20Image%20Server%20training%20%22%5D%0Afaq1-%3Eans1%0A%7D%0A%0Adigraph%20image_server_faq2%20%7B%0A%20%20rankdir%3DLR%0A%20%20node%5Bstyle%3Dfilled%5D%0A%20%20subgraph%20cluster_pipeline%20%7B%0Alabel%3DIntelePACS%0A%20%20%20%20LDS%5BURL%3D%22%23lds%22%5D%0A%20%20%20%20DMS%5BURL%3D%22%23dms%22%5D%0Aimage_server%5BURL%3D%22%23image_server%22%5D%0A%20%20%20%20UMDB%5BURL%3D%22%23umdb%22%5D%0A%20%20%20%20AutoRoute%5BURL%3D%22%23autoroute%22%5D%0A%20%20%20%20AutoMove%5BURL%3D%22%23automove%22%5D%0A%20%20%7D%0A%20%20%20%20scanner%20-%3E%20image_server%20-%3E%20LDS%20-%3E%20%7B%20AutoRoute%20UMDB%20AutoMove%20DMS%7D%0A%20%20%20%20UMDB-%3EDMS%0A%0Asubgraph%20cluster_FAQ%20%7B%0A%20%20faq1%5Blabel%3D%22Association%20Rejected%22%20URL%3D%22%23image_server_faq1%22%5D%0A%20%20faq2%5Blabel%3D%22Too%20slow%22%20URL%3D%22%23image_server_faq2%22%5D%0A%20%20faq3%5Blabel%3D%22Load%20Balancing%22%5D%0A%20%20faq4%5Blabel%3D%22...%22%5D%0A%7D%0Aimage_server-%3E%7B%20faq1%20faq2%20faq3%20faq4%20%7D%0A%0Aans2%5Bshape%3Dbox%20label%3D%22Image%20server%20%0AANSWER%20%23%202%0AThis%20service%20is%20performing%20the%20initial%20image%20ingestion%0ALogs%3A%20%2Fvar%2Flog%2FPACS%2Fimage_server%0ALink%20to%20training%20slide%3A%20Image%20Server%20training%20%22%5D%0Afaq2-%3Eans2%0A%7D%0A%0A%0A%0Adigraph%20lds%20%7B%0A%20%20rankdir%3DLR%0A%20%20node%5Bstyle%3Dfilled%5D%0A%20%20subgraph%20cluster_pipeline%20%7B%0Alabel%3DIntelePACS%0A%20%20%20%20LDS%5BURL%3D%22%23lds%22%5D%0A%20%20%20%20DMS%5BURL%3D%22%23dms%22%5D%0Aimage_server%5BURL%3D%22%23image_server%22%5D%0A%20%20%20%20UMDB%5BURL%3D%22%23umdb%22%5D%0A%20%20%20%20AutoRoute%5BURL%3D%22%23autoroute%22%5D%0A%20%20%20%20AutoMove%5BURL%3D%22%23automove%22%5D%0A%20%20%20%20%0A%20%20%7D%0A%20%20%20%20scanner%20-%3E%20image_server%20-%3E%20LDS%20-%3E%20%7B%20AutoRoute%20UMDB%20AutoMove%20DMS%7D%0A%20%20%20%20UMDB-%3EDMS%0A%0Asubgraph%20cluster_FAQ%20%7B%0A%20%20faq1%5Blabel%3D%22Ingestion%20Failure%22%20URL%3D%22%23lds_faq1%22%5D%0A%20%20faq2%5Blabel%3D%22Bloat%22%20URL%3D%22%23lds_faq2%22%5D%0A%20%20faq3%5Blabel%3D%22...%22%5D%0A%7D%0ALDS-%3E%7B%20faq1%20faq2%20faq3%20%20%7D%0A%7D%0A%0Adigraph%20lds_faq1%20%7B%0A%20%20rankdir%3DLR%0A%20%20node%5Bstyle%3Dfilled%5D%0A%20%20subgraph%20cluster_pipeline%20%7B%0Alabel%3DIntelePACS%0A%20%20%20%20LDS%5BURL%3D%22%23lds%22%5D%0A%20%20%20%20DMS%5BURL%3D%22%23dms%22%5D%0Aimage_server%5BURL%3D%22%23image_server%22%5D%0A%20%20%20%20UMDB%5BURL%3D%22%23umdb%22%5D%0A%20%20%20%20AutoRoute%5BURL%3D%22%23autoroute%22%5D%0A%20%20%20%20AutoMove%5BURL%3D%22%23automove%22%5D%0A%20%20%20%20%0A%20%20%7D%0A%20%20%20%20scanner%20-%3E%20image_server%20-%3E%20LDS%20-%3E%20%7B%20AutoRoute%20UMDB%20AutoMove%20DMS%7D%0A%20%20%20%20UMDB-%3EDMS%0A%0Asubgraph%20cluster_FAQ%20%7B%0A%20%20faq1%5Blabel%3D%22Ingestion%20Failure%22%20URL%3D%22%23lds_faq1%22%5D%0A%20%20faq2%5Blabel%3D%22Bloat%22%20URL%3D%22%23lds_faq2%22%5D%0A%20%20faq3%5Blabel%3D%22...%22%5D%0A%7D%0ALDS-%3E%7B%20faq1%20faq2%20faq3%20%20%7D%0A%0Aans1%5Bshape%3Dbox%20label%3D%22LDS%20%0AANSWER%20%23%201%20%22%5D%0Afaq1-%3Eans1%0A%7D%0A%0Adigraph%20lds_faq2%20%7B%0A%20%20rankdir%3DLR%0A%20%20node%5Bstyle%3Dfilled%5D%0A%20%20subgraph%20cluster_pipeline%20%7B%0Alabel%3DIntelePACS%0A%20%20%20%20LDS%5BURL%3D%22%23lds%22%5D%0A%20%20%20%20DMS%5BURL%3D%22%23dms%22%5D%0Aimage_server%5BURL%3D%22%23image_server%22%5D%0A%20%20%20%20UMDB%5BURL%3D%22%23umdb%22%5D%0A%20%20%20%20AutoRoute%5BURL%3D%22%23autoroute%22%5D%0A%20%20%20%20AutoMove%5BURL%3D%22%23automove%22%5D%0A%20%20%20%20%0A%20%20%7D%0A%20%20%20%20scanner%20-%3E%20image_server%20-%3E%20LDS%20-%3E%20%7B%20AutoRoute%20UMDB%20AutoMove%20DMS%7D%0A%20%20%20%20UMDB-%3EDMS%0A%0Asubgraph%20cluster_FAQ%20%7B%0A%20%20faq1%5Blabel%3D%22Ingestion%20Failure%22%20URL%3D%22%23lds_faq1%22%5D%0A%20%20faq2%5Blabel%3D%22Bloat%22%20URL%3D%22%23lds_faq2%22%5D%0A%20%20faq3%5Blabel%3D%22...%22%5D%0A%7D%0ALDS-%3E%7B%20faq1%20faq2%20faq3%20%20%7D%0A%0Aans2%5Bshape%3Dbox%20label%3D%22LDS%20%0AANSWER%20%23%202%20%22%5D%0Afaq2-%3Eans2%0A%7D)

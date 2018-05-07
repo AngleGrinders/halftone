@@ -50,7 +50,7 @@ export class ViewerComponent implements OnInit {
 
   private checkDotUpdate() : void
   {
-    let newDot = this.stateService.getDot();
+    let newDot = this.stateService.getCurrentDot();
     if ( newDot != this.currentDot )
     {
       this.updateGraph( newDot );

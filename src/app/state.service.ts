@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { resolve } from 'url';
 
 @Injectable()
 export class StateService
@@ -96,11 +97,15 @@ export class StateService
             names.push( currentName );
         }
     }
-
     return names;
   }
 
-  public getDot() : string
+  public getCurrentDot() : string
+  {
+    return this.getDot( this.name );
+  }
+
+  public getDot( name : string ) : string
   {
     if ( this.dots != null )
     {
@@ -111,13 +116,38 @@ export class StateService
           if ( splittedPartialDot.length > 1 )
           {
               let currentName = splittedPartialDot[0].trim();
-              if ( currentName === this.name )
+              if ( currentName === name )
               {
-                  return "digraph" + partialDot;
+                  return this.resolveDot( "digraph" + partialDot );
               }
           }
       }
     }
     return "digraph NotFound { \"Could not find a diagram\" }";
+  }
+
+  private resolveDot( dot : string ) : string
+  {
+    let subgraphMatcher = /^\s*subgraph\s+import_(\w+)\s*{\s*}\s*;?\s*$/gm;
+    let names = this.getNames();
+    let state = this;
+    return dot.replace( subgraphMatcher, function ( line, name ) : string
+    {
+      if ( name === state.name )
+      {
+        console.error( "Recursive import not allowed" );
+        return line;
+      }
+
+      if ( names.indexOf( name ) >= 0 )
+      {
+        //console.log( name );
+        return state.getDot( name )
+                    .replace( "digraph", "subgraph" );
+      }
+      // Nothing to replace
+      console.error( "Invalid import " + name + " is not a diagram name" );
+      return line;
+    } );
   }
 }
