@@ -1,0 +1,102 @@
+
+digraph overview
+{
+    rankdir = "LR"
+
+    node [
+        shape = "box"
+        style = "filled"
+        fillcolor = "#FFFFFF88"
+    ];
+
+    subgraph cluster_external
+    {
+        label = "External"
+        bgcolor = "violet"
+
+        RIS
+        Workstation
+        Scanner
+        Browser
+    }
+
+    subgraph cluster_pacs
+    {
+        label = "IntelePACS"
+
+        subgraph cluster_pacs_backend
+        {
+            label = "Backend"
+            bgcolor = "salmon"
+
+            dicom [ label = "DICOM" URL="#dicom" ];
+            hl7   [ label = "HL7" ];
+            atlas [ label = "Workflow" ];
+        }
+
+        subgraph cluster_pacs_frontend
+        {
+            label = "Frontend"
+            bgcolor = "greenyellow";
+
+            iv  [ label = "InteleViewer" ];
+            ib  [ label = "InteleBrowser" ];
+            ev  [ label = "EnterpriseViewer" ];
+            pp  [ label = "PatientPortal" ];
+            tp  [ label = "TechPortal" ];
+            rpp [ label = "RefPhysPortal" ];
+        }
+
+        subgraph cluster_pacs_cloud
+        {
+            label = "Cloud"
+            bgcolor = "cyan"
+
+            cris   [ label = "CloudRIS" ];
+            cstore [ label = "CloudStorage" ];
+        }
+    }
+
+    RIS -> hl7
+    { Scanner Workstation } -> dicom
+    Browser -> { iv ib ev pp tp rpp cris }
+    //hl7 -> { dicom atlas }
+   // { iv ib } -> dicom
+
+}
+
+digraph dicom {
+
+    rankdir = "LR"
+
+    subgraph import_overview {};
+
+    subgraph overview
+    {
+        subgraph cluster_pacs
+        {
+            subgraph cluster_pacs_backend
+            {
+                dicom [ label = "DICOM\nProtocol" ]
+
+                subgraph cluster_pacs_backend_dicom
+                {
+                    label = "DICOM"
+
+                    dms  [ label = "DicomMasterService" ]       
+                    lds  [ label = "LocalDicomService" ]       
+                    is   [ label = "image_server" ]   
+                    ar   [ label = "AutoRoute" ]   
+                    am   [ label = "AutoMove2" ]   
+                    dm   [ label = "diskmon" ]   
+                    des  [ label = "DicomExternService" ]       
+                    da   [ label = "DicomAgent" ]   
+                    iocm [ label = "IocmAgent" ]       
+                    rai  [ label = "RegionalArchiveIntegration" ]       
+                }
+            }
+        }
+    }
+
+    dicom -> is
+}
