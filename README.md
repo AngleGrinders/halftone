@@ -63,7 +63,28 @@ digraph second {
   b->d
 }
 ```
-
+### Adding to imported clusters
+When a graph is imported, we simply drop the `import_` prefix and use it as a normal subgraph.
+In the following example, `d` is inserted into the cluster declared in the first diagram.
+```
+digraph first {
+  subgraph cluster_firstbox {
+    a;
+    b;
+  }
+  a->b->c
+}
+digraph second {
+  subgraph import_first {}
+  
+  subgraph first {
+    subgraph cluster_firstbox {
+      d;
+    }
+  }
+  b->d
+}
+```
 ## Prerequisites
 1. Node.js (Download from [node.js](https://nodejs.org/en/download/))
 
